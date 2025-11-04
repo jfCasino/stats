@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 //TODO remove exclude when db is configured		
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-public class StatisticServiceApplication {
+public class StatisticsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StatisticServiceApplication.class, args);
+		SpringApplication.run(StatisticsApplication.class, args);
 	}
 
 }
