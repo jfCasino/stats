@@ -15,6 +15,7 @@ public class StatisticsController {
     @GetMapping("/stats/bets")
     public ResponseEntity<List<Object>> getBetStatistics(@RequestParam(name = "order",defaultValue = "asc") String order,
     @RequestParam(name = "limit", defaultValue = "10") int limit) {
+        //TODO implement this api with asynchronus comunication via kafka
         //TODO implement method to get bet statistics from rulette-service DB
         return ResponseEntity.ok(List.of("bet statistics"));
     }
