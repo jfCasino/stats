@@ -1,14 +1,13 @@
 package com.jfCasino.stats_service.Controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class StatisticsController {
     
     //JF returns a users statistics about his bets, limit it and order by time
