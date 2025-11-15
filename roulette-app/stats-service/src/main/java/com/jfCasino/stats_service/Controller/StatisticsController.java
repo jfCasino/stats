@@ -7,9 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfCasino.stats_service.Service.StatisticsService;
+import com.jfCasino.stats_service.dto.internal.WalletResponse;
+
 @RestController
 public class StatisticsController {
-    
+
+    private final StatisticsService statisticsService;
+
+    public StatisticsController(StatisticsService statisticsService) {
+        this.statisticsService = statisticsService;
+    }
+
     //JF returns a users statistics about his bets, limit it and order by time
     @GetMapping("/stats/bets")
     public ResponseEntity<List<Object>> getBetStatistics(@RequestParam(name = "order",defaultValue = "asc") String order,
@@ -20,9 +29,9 @@ public class StatisticsController {
     }
 
     @GetMapping("/stats/leaderboard")
-    public ResponseEntity<List<Object>> getLeaderboard(@RequestParam(name = "order",defaultValue = "asc") String order,
+    public ResponseEntity<List<WalletResponse>> getLeaderboard(@RequestParam(name = "order",defaultValue = "asc") String order,
     @RequestParam(name = "limit", defaultValue = "10") int limit) {
         //TODO implement method to get leaderboard statistics, get data from wallet service
-        return ResponseEntity.ok(List.of("leaderboard statistics"));
+        return ResponseEntity.ok(statisticsService.getLeaderboard(order, limit));
     }
 }
