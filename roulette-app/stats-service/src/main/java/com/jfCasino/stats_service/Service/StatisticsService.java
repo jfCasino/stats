@@ -10,6 +10,7 @@ public class StatisticsService {
 
     private final WalletClient walletClient;
 
+    //TODO implement asyncronus communication with rulette-service to recieve bets (using kafka)
     public StatisticsService(WalletClient walletClient) {
         this.walletClient = walletClient;
     }
