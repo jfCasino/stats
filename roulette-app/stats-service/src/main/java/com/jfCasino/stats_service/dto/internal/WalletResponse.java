@@ -1,23 +1,25 @@
 package com.jfCasino.stats_service.dto.internal;
 
+import java.util.UUID;
+
 public class WalletResponse {
-    private String userID;
+    private UUID walletID;
     private int balance;
 
     public WalletResponse() {};
 
-    public WalletResponse(String userID, int balance) {
-        this.userID = userID;
+    public WalletResponse(UUID walletID, int balance) {
+        this.walletID = walletID;
         this.balance = balance;
     }
 
     //getters and setters
-    public String getUserID() {
-        return userID;
+    public UUID getwalletID() {
+        return walletID;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setwalletID(UUID walletID) {
+        this.walletID = walletID;
     }
 
     public int getBalance() {
