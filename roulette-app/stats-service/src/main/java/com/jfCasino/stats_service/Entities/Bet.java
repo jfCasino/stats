@@ -17,7 +17,7 @@ import java.util.UUID;
 public class Bet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "betId", nullable = false)
     private UUID id;
 
     @Column(name = "userId", nullable = false)
@@ -39,7 +39,8 @@ public class Bet {
     public Bet() {
     }
 
-    public Bet(String userId, String gameId, int totalStake, int totalWinnings, Instant createdAt) {
+    public Bet(UUID id, String userId, String gameId, int totalStake, int totalWinnings, Instant createdAt) {
+        this.id = id;
         this.userId = userId;
         this.gameId = gameId;
         this.totalStake = totalStake;
