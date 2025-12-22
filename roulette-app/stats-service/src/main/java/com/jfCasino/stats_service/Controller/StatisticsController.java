@@ -29,7 +29,7 @@ public class StatisticsController {
     }
 
     @GetMapping("/stats/leaderboard")
-    public ResponseEntity<List<WalletResponse>> getLeaderboard(@RequestParam(name = "order",defaultValue = "asc") String order,
+    public ResponseEntity<List<WalletResponse>> getLeaderboard(@RequestParam(name = "order",defaultValue = "desc") String order,
     @RequestParam(name = "limit", defaultValue = "10") int limit) {
         //TODO implement method to get leaderboard statistics, get data from wallet service
         return ResponseEntity.ok(statisticsService.getLeaderboard(order, limit));
