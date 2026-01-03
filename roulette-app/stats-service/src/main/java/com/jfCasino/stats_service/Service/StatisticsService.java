@@ -11,6 +11,9 @@ import com.jfCasino.stats_service.repository.TopWalletRepository;
 import java.util.Collections;
 
 import org.springframework.data.domain.Pageable;
+import com.jfCasino.stats_service.dto.kafka.BetCreatedEvent;
+import org.springframework.kafka.annotation.KafkaListener;
+
 import java.util.List;
 
 @Service
@@ -23,6 +26,20 @@ public class StatisticsService {
     public StatisticsService(TopWalletRepository topWalletRepository, BetRepository betRepository) {
         this.topWalletRepository = topWalletRepository;
         this.betRepository = betRepository;
+    }
+
+    @KafkaListener(topics = "bets-topic", groupId = "stats-group")
+    public void handleBetCreated(BetCreatedEvent event) {
+
+        // Map event to stats entity
+        Bet statsBet = new Bet();
+        statsBet.setId(event.getId());
+        statsBet.setUserId(event.getUserId());
+        statsBet.setTotalStake(event.getTotalStake());
+        statsBet.setGameId(event.getGameId());
+        statsBet.setCreatedAt(event.getCreatedAt());
+
+        betRepository.save(statsBet);
     }
 
     public List<BetResponse> getBetStatistics(String userId, String order, int limit) {

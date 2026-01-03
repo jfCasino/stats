@@ -1,45 +1,21 @@
-package com.jfCasino.stats_service.Entities;
+package com.jfCasino.stats_service.dto.kafka;
 
-
-import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
 
-@Entity
-@Table(name = "bets",
-        indexes = {
-        @Index(
-            name = "idx_bets_user_id_created_at",
-            columnList = "userId, createdAt"
-        )
-    }
-)
-public class Bet {
-
-    @Id
-    @Column(name = "betId", nullable = false)
+public class BetCreatedEvent {
     private UUID id;
-
-    @Column(name = "userId", nullable = false)
     private String userId;
-
-    @Column(name = "gameID", nullable = false)
     private String gameId;
-
-    @Column(name = "totalStake", nullable = false)
     private int totalStake;
-
-    @Column(name = "totalWinnings", nullable = false)
     private int totalWinnings;
-
-    @Column(name = "createdAt", nullable = false)
     private Instant createdAt;
 
     // Constructors
-    public Bet() {
+    public BetCreatedEvent() {
     }
 
-    public Bet(UUID id, String userId, String gameId, int totalStake, int totalWinnings, Instant createdAt) {
+    public BetCreatedEvent(UUID id, String userId, String gameId, int totalStake, int totalWinnings, Instant createdAt) {
         this.id = id;
         this.userId = userId;
         this.gameId = gameId;

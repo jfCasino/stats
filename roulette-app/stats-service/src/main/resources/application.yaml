@@ -16,6 +16,18 @@ spring:
       hibernate:
         format_sql: true
 
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: stats-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        spring.json.trusted.packages: "*" # or your package
+        spring.json.type.mapping: BetCreatedEvent:com.jfCasino.stats_service.dto.kafka.BetCreatedEvent
+
 server:
   port: ${SERVER_PORT:8080}
   address: 0.0.0.0
