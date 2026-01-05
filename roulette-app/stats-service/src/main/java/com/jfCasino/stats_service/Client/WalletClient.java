@@ -11,7 +11,7 @@ import com.jfCasino.stats_service.dto.internal.WalletResponse;
 
 @FeignClient(
     name = "wallet-service",
-    url = "http://localhost:8081" // or use service discovery later
+    url = "${wallet.service.url}" // Use property placeholder
 )
 public interface WalletClient {
 

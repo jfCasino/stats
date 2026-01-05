@@ -2,6 +2,8 @@ package com.jfCasino.stats_service.Service;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import com.jfCasino.stats_service.Client.WalletClient;
 import com.jfCasino.stats_service.Entities.Bet;
 import com.jfCasino.stats_service.dto.internal.BetResponse;
 import com.jfCasino.stats_service.Entities.TopWallet;
@@ -11,6 +13,8 @@ import com.jfCasino.stats_service.repository.TopWalletRepository;
 import java.util.Collections;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+
 import com.jfCasino.stats_service.dto.kafka.BetCreatedEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 
@@ -21,11 +25,12 @@ public class StatisticsService {
 
     private final TopWalletRepository topWalletRepository;
     private final BetRepository betRepository;
+    private final WalletClient walletClient;
 
-    //TODO implement asyncronus communication with rulette-service to recieve bets (using kafka)
-    public StatisticsService(TopWalletRepository topWalletRepository, BetRepository betRepository) {
+    public StatisticsService(TopWalletRepository topWalletRepository, BetRepository betRepository, WalletClient walletClient) {
         this.topWalletRepository = topWalletRepository;
         this.betRepository = betRepository;
+        this.walletClient = walletClient;
     }
 
     @KafkaListener(topics = "bets-topic", groupId = "stats-group")
@@ -63,16 +68,16 @@ public class StatisticsService {
     
 
     public List<WalletResponse> getLeaderboardTop5() {
-        List<TopWallet> wallets;
+        // Call the Feign client
+        ResponseEntity<List<WalletResponse>> response = walletClient.getAllWallets("desc", 5);
 
-        wallets = topWalletRepository.findTop5ByOrderByBalanceDesc();
+        // Check response status
+        if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
+            throw new RuntimeException("Failed to fetch wallets for leaderboard");
+        }
 
-        return wallets.stream()
-                .map(wallet -> new WalletResponse(
-                        wallet.getWalletId(),
-                        wallet.getBalance()
-                ))
-                .toList();
+        // Return the list
+        return response.getBody();
     }
 
     //za vsak slucaj ce bomo rabli
