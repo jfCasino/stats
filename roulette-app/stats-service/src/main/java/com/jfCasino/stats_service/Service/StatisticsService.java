@@ -42,6 +42,7 @@ public class StatisticsService {
         statsBet.setUserId(event.getUserId());
         statsBet.setTotalStake(event.getTotalStake());
         statsBet.setGameId(event.getGameId());
+        statsBet.setTotalWinnings(event.getTotalWinnings());
         statsBet.setCreatedAt(event.getCreatedAt());
 
         betRepository.save(statsBet);
