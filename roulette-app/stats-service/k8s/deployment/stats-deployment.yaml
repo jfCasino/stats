@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stats-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stats-service
+  template:
+    metadata:
+      labels:
+        app: stats-service
+    spec:
+      containers:
+        - name: stats-service
+          image: jfcasinoacr1.azurecr.io/stats-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+
+          env:
+          - name: WALLET_SERVICE_URL
+            value: http://wallet-service:8080
+
+          - name: KAFKA_BOOTSTRAP_SERVERS
+            value: "jfcasino.servicebus.windows.net:9093"
+          
+          - name: SPRING_DATASOURCE_URL
+            valueFrom:
+              secretKeyRef:
+                name: stats-db-secret
+                key: SPRING_DATASOURCE_URL
+              
+          - name: JAVA_TOOL_OPTIONS
+            value: "-Dspring.kafka.listener.missing-topics-fatal=false"
+
+          - name: SPRING_DATASOURCE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: stats-db-secret
+                key: SPRING_DATASOURCE_USERNAME
+
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: stats-db-secret
+                key: SPRING_DATASOURCE_PASSWORD
+
+          - name: SPRING_JPA_DATABASE_PLATFORM
+            valueFrom:
+              secretKeyRef:
+                name: stats-db-secret
+                key: SPRING_JPA_DATABASE_PLATFORM
+
+          - name: EVENT_HUB_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: stats-eh-secret
+                key: EVENT_HUB_CONNECTION_STRING
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            failureThreshold: 3
