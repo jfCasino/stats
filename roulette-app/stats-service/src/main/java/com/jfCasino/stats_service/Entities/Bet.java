@@ -4,6 +4,7 @@ package com.jfCasino.stats_service.Entities;
 import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "bets",
@@ -27,10 +28,10 @@ public class Bet {
     private String gameId;
 
     @Column(name = "totalStake", nullable = false)
-    private int totalStake;
+    private BigDecimal totalStake;
 
     @Column(name = "totalWinnings", nullable = false)
-    private int totalWinnings;
+    private BigDecimal totalWinnings;
 
     @Column(name = "createdAt", nullable = false)
     private Instant createdAt;
@@ -39,7 +40,7 @@ public class Bet {
     public Bet() {
     }
 
-    public Bet(UUID id, String userId, String gameId, int totalStake, int totalWinnings, Instant createdAt) {
+    public Bet(UUID id, String userId, String gameId, BigDecimal totalStake, BigDecimal totalWinnings, Instant createdAt) {
         this.id = id;
         this.userId = userId;
         this.gameId = gameId;
@@ -73,19 +74,19 @@ public class Bet {
         this.gameId = gameId;
     }
 
-    public int getTotalStake() {
+    public BigDecimal getTotalStake() {
         return totalStake;
     }
 
-    public void setTotalStake(int totalStake) {
+    public void setTotalStake(BigDecimal totalStake) {
         this.totalStake = totalStake;
     }
 
-    public int getTotalWinnings() {
+    public BigDecimal getTotalWinnings() {
         return totalWinnings;
     }
 
-    public void setTotalWinnings(int totalWinnings) {
+    public void setTotalWinnings(BigDecimal totalWinnings) {
         this.totalWinnings = totalWinnings;
     }
 

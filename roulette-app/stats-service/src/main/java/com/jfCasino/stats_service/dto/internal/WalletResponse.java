@@ -1,7 +1,7 @@
 package com.jfCasino.stats_service.dto.internal;
 
 import java.util.UUID;
-
+import java.math.BigDecimal;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
@@ -22,12 +22,12 @@ public class WalletResponse {
         description = "Current balance of the wallet",
         example = "850"
     )
-    private int balance;
+    private BigDecimal balance;
 
 
     public WalletResponse() {};
 
-    public WalletResponse(UUID walletID, int balance) {
+    public WalletResponse(UUID walletID, BigDecimal balance) {
         this.walletID = walletID;
         this.balance = balance;
     }
@@ -41,11 +41,11 @@ public class WalletResponse {
         this.walletID = walletID;
     }
 
-    public int getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
     
-    public void setBalance(int balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 }

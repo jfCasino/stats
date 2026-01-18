@@ -3,6 +3,7 @@ package com.jfCasino.stats_service.dto.internal;
 import com.jfCasino.stats_service.Entities.Bet;
 import java.time.Instant;
 import java.util.UUID;
+import java.math.BigDecimal;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -34,13 +35,13 @@ public class BetResponse {
         description = "Total stake amount placed in the bet",
         example = "150"
     )
-    private final int totalStake;
+    private final BigDecimal totalStake;
 
     @Schema(
         description = "Total winnings from the bet",
         example = "300"
     )
-    private final int totalWinnings;
+    private final BigDecimal totalWinnings;
 
     @Schema(
         description = "Timestamp when the bet was created",
@@ -52,8 +53,8 @@ public class BetResponse {
             UUID id,
             String userId,
             String gameId,
-            int totalStake,
-            int totalWinnings,
+            BigDecimal totalStake,
+            BigDecimal totalWinnings,
             Instant createdAt
     ) {
         this.id = id;
@@ -76,11 +77,11 @@ public class BetResponse {
         return gameId;
     }
 
-    public int getTotalStake() {
+    public BigDecimal getTotalStake() {
         return totalStake;
     }
 
-    public int getTotalWinnings() {
+    public BigDecimal getTotalWinnings() {
         return totalWinnings;
     }
 

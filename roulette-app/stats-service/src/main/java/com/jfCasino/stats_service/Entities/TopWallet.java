@@ -3,6 +3,7 @@ package com.jfCasino.stats_service.Entities;
 import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "top_wallets")
@@ -13,7 +14,7 @@ public class TopWallet {
     private UUID walletId;
 
     @Column(name = "balance", nullable = false, precision = 19, scale = 4)
-    private int balance;
+    private BigDecimal balance;
 
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
@@ -22,7 +23,7 @@ public class TopWallet {
     public TopWallet() {
     }
 
-    public TopWallet(UUID walletId, int balance, Instant updatedAt) {
+    public TopWallet(UUID walletId, BigDecimal balance, Instant updatedAt) {
         this.walletId = walletId;
         this.balance = balance;
         this.updatedAt = updatedAt;
@@ -37,11 +38,11 @@ public class TopWallet {
         this.walletId = walletId;
     }
 
-    public int getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
